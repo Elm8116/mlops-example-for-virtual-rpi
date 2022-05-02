@@ -25,10 +25,10 @@ jobs:
       - uses: actions/checkout@v3
         name: Check out code
 
-      - uses: elm8116/docker-build-push@v3
+      - uses: elham8116/docker-build-push@v3
         name: build and push docker image
         with:
-          image: elm8116/docker-ML-app
+          image: elham8116/docker-ML-app
           registry: docker.io
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
