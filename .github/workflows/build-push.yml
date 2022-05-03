@@ -26,7 +26,7 @@ jobs:
         name: Docker meta
         id: docker_meta
         with:
-          images: ghcr.io/elm8116/docker-ML-app
+          images: ghcr.io/Elm8116/docker-ML-app
           tag-sha: true
           tag-edge: false
           tag-latest: true
@@ -37,7 +37,7 @@ jobs:
         name: Login to GHCR
         with:
           registry: ghcr.io
-          username: ${{ elm8116 }}
+          username: ${{ Elm8116 }}
           password: ${{ secrets.GHCR_PAT }}
 
       - uses: docker/build-push-action@v2
@@ -54,16 +54,5 @@ jobs:
           file: ./Dockerfile
 
 
-#      # setup docker build action
-#      - name: set up docker build
-#        uses:
-#
-#      - uses: elham8116/docker-build-push@v1
-#        name: build and push docker image
-#        with:
-#          image: elham8116/docker-ML-app
-#          registry: docker.io
-#          username: ${{ secrets.DOCKERHUB_USERNAME }}
-#          password: ${{ secrets.DOCKERHUB_TOKEN }}
 #
 
