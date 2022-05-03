@@ -10,22 +10,19 @@ on:
   pull_request:
     branches: [ main ]
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  push_to_registry:
-    name: Push Docker image to Docker Hub
+  build_push_image:
+    name: Build docker image and push to repository
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@main
         name: Check out code
 
-      - uses: elham8116/docker-build-push@v3
+      - uses: elham8116/docker-build-push@main
         name: build and push docker image
         with:
           image: elham8116/docker-ML-app
