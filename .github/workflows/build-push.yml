@@ -3,56 +3,87 @@
 name: Publish Docker Image
 
 # Controls when the workflow will run
-on:
-  # Triggers the workflow on push or pull request events but only for the main branch
-  push:
-    branches: [ main ]
-  release:
-    types:
-      - published
+on: [push]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  build_push_image:
-    name: Build docker image and push to repository
-    runs-on: ubuntu-latest
+  lint:
+    runs-on: ubuntu-18.04
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - uses: actions/checkout@v2
-        name: Check out code
+    - uses: actions/checkout@v1
+    - name: Setup Python environment
+      uses: actions/setup-python@v1.1.1
+    - name: Install requirements
+      run: pip install --quiet --requirement requirements.txt
+    - name: Lint code
+      run: |
+        flake8 --ignore=E501,E231 *.py
+        pylint --disable=C0301 --disable=C0326 test_app.py
+    - name: Run unit tests
+      run: |
+        python -m unittest --verbose --failfast
 
-      - uses: crazy-max/ghaction-docker-meta@v1
-        name: Docker meta
-        id: docker_meta
-        with:
-          images: ghcr.io/Elm8116/docker-ML-app
-          tag-sha: false
-          tag-edge: false
-          tag-latest: true
-          
-      - uses: docker/setup-qemu-action@v1
-        name: Setup QEMU
+  build_image:
+    needs: [lint]
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: action/checkout@v1
+      - name: Checkout
 
+      - name: Login to Docker Hub
       - uses: docker/login-action@v1
-        name: Login to GHCR
         with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GHCR_PAT }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Set up Docker Buildx
+      - uses: docker/setup-buildx-action@v1
+
+      - name: Build and push
       - uses: docker/build-push-action@v2
-        name: Build image
-        with:
-          # tag: ${{ steps.docker_meta.outputs.tags }}
+      with:
+          context: .
           file: ./Dockerfile
-
-      - uses: docker/build-push-action@v2
-        name: Push image
-        with:
           push: true
-          # tag: ${{ steps.docker_meta.outputs.tags }}
-          file: ./Dockerfile
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/ml-docker:latest
+
+
+      - #      - uses: actions/checkout@v2
+#        name: Check out code
+#
+#      - uses: crazy-max/ghaction-docker-meta@v1
+#        name: Docker meta
+#        id: docker_meta
+#        with:
+#          images: ghcr.io/Elm8116/docker-ML-app
+#          tag-sha: false
+#          tag-edge: false
+#          tag-latest: true
+#
+#      - uses: docker/setup-qemu-action@v1
+#        name: Setup QEMU
+#
+#      - uses: docker/login-action@v1
+#        name: Login to GHCR
+#        with:
+#          registry: ghcr.io
+#          username: ${{ github.repository_owner }}
+#          password: ${{ secrets.GHCR_PAT }}
+#
+#      - uses: docker/build-push-action@v2
+#        name: Build image
+#        with:
+#          # tag: ${{ steps.docker_meta.outputs.tags }}
+#          file: ./Dockerfile
+#
+#      - uses: docker/build-push-action@v2
+#        name: Push image
+#        with:
+#          push: true
+#          # tag: ${{ steps.docker_meta.outputs.tags }}
+#          file: ./Dockerfile
 
 
 #
