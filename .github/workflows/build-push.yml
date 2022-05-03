@@ -27,7 +27,7 @@ jobs:
         id: docker_meta
         with:
           images: ghcr.io/Elm8116/docker-ML-app
-          tag-sha: true
+          tag-sha: false
           tag-edge: false
           tag-latest: true
           
@@ -44,14 +44,14 @@ jobs:
       - uses: docker/build-push-action@v2
         name: Build image
         with:
-          tag: ${{ steps.docker_meta.outputs.tags }}
+          # tag: ${{ steps.docker_meta.outputs.tags }}
           file: ./Dockerfile
 
       - uses: docker/build-push-action@v2
         name: Push image
         with:
           push: true
-          tag: ${{ steps.docker_meta.outputs.tags }}
+          # tag: ${{ steps.docker_meta.outputs.tags }}
           file: ./Dockerfile
 
 
