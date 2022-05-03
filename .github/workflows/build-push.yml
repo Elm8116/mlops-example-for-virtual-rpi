@@ -14,6 +14,9 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   build_push_image:
+  if: "!contains(github.event.head_commit.message, 'skip ci')":
+  runs-on: ubuntu-latest
+  
     name: Build docker image and push to repository
     runs-on: ubuntu-latest
 
@@ -30,6 +33,7 @@ jobs:
           tag-sha: true
           tag-edge: false
           tag-latest: true
+          
       - uses: docker/setup-qemu-action@v1
         name: Setup QEMU
 
@@ -37,7 +41,7 @@ jobs:
         name: Login to GHCR
         with:
           registry: ghcr.io
-          username: ${{ Elm8116 }}
+          username: ${{ github.repository_owner }}
           password: ${{ secrets.GHCR_PAT }}
 
       - uses: docker/build-push-action@v2
