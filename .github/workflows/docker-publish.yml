@@ -7,6 +7,8 @@ name: Create and publish a Docker image
 
 on:
   release:
+     tags:
+       - v1.**
 
 env:
   # Use docker.io for Docker Hub if empty
