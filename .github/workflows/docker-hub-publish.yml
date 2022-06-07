@@ -19,16 +19,17 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v1
-        with:
-          images: elham8116/ml-app-cicd:latest
+#       - name: Extract metadata (tags, labels) for Docker
+#         id: meta
+#         uses: docker/metadata-action@v1
+#         with:
+#           images: elham8116/ml-app-cicd
       
       - name: Build and push Docker image
         uses: docker/build-push-action@v1
         with:
           context: .
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/ml-app-cicd:latest
+#           tags: ${{ steps.meta.outputs.tags }}
+#           labels: ${{ steps.meta.outputs.labels }}
