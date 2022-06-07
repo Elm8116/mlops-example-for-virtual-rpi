@@ -30,6 +30,6 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/ml-app-cicd:latest
+          tags: ${{ secrets.DOCKER_USERNAME}}/ml-app-cicd:latest
 #           tags: ${{ steps.meta.outputs.tags }}
 #           labels: ${{ steps.meta.outputs.labels }}
