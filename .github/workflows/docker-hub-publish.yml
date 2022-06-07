@@ -29,7 +29,7 @@ jobs:
          context: .
          file: ./Dockerfile
          push: true
-#          tags: ${{ secrets.DOCKERHUB_USERNAME }}/ml-app-cicd
+         tags: ${{ secrets.DOCKER_USERNAME }}/ml-app-cicd
 
 
 
