@@ -1,6 +1,5 @@
 name: Publish Docker Image
 
-# Controls when the workflow will run
 on: [push]
 
 jobs:
