@@ -23,7 +23,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v1
         with:
-          images: elham8116/ml-app-cicd:latest
+          images: elham8116/ml-app-cicd
       
       - name: Build and push Docker image
         uses: docker/build-push-action@v1
