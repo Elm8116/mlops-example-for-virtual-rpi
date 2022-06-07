@@ -7,8 +7,6 @@ on:
      types: [published]
 
 jobs:
-
-
   build_image:
     runs-on: ubuntu-latest
     steps:
