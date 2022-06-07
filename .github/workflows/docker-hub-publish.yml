@@ -3,7 +3,9 @@
 name: Publish Docker Image
 
 # Controls when the workflow will run
-on: [push]
+on: 
+   release:
+     types: [published]
 
 jobs:
 
@@ -29,7 +31,7 @@ jobs:
          context: .
          file: ./Dockerfile
          push: true
-         tags: ${{ secrets.DOCKER_USERNAME }}/ml-app-cicd
+         tags: ${{ secrets.DOCKER_USERNAME }}/ml-app-cicd-2
 
 
 
