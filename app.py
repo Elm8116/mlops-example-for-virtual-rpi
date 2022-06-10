@@ -1,9 +1,11 @@
 import os
-from flask import Flask, request, redirect, url_for, send_from_directory, render_template
+from flask import Flask, request, send_from_directory, render_template
 import tflite_runtime.interpreter as tflite
 import numpy as np
 from PIL import Image
 from werkzeug.utils import secure_filename
+import time
+
 
 ALLOWED_EXTENSIONS = set(['jpg', 'jpeg', 'png'])
 IMAGE_SIZE = (224, 224)
@@ -18,8 +20,17 @@ def load_labels(filename):
 
 
 # load model and allocate tensors
-interpreter = tflite.Interpreter(model_path='mobilenet_v3_small_100_224.tflite')
-interpreter.allocate_tensors()
+def load_model(model_path):
+    armnn_delegate = tflite.load_delegate('./libarmnnDelegate.so.25',
+                                          options={
+                                              "backends": "CpuAcc, CpuRef, GpuAcc ",
+                                              "logging-severity": "info"
+                                          }
+                                          )
+    model = tflite.Interpreter(model_path, experimental_delegates=[armnn_delegate])
+    model.allocate_tensors()
+
+    return model
 
 
 def allowed_file(filename):
@@ -46,6 +57,10 @@ def predict(file):
     interpreter.set_tensor(input_details[0]['index'], input_data)
 
     interpreter.invoke()
+    start_time = time.time()
+    interpreter.invoke()
+    stop_time = time.time()
+    time_ms = round((stop_time-start_time) * 1000, 2)
 
     output_data = interpreter.get_tensor(output_details[0]['index'])
     results = np.squeeze(output_data)
@@ -53,9 +68,9 @@ def predict(file):
     top_k = results.argsort()[-5:][::-1]
     labels = load_labels('labels.txt')
     if floating_model:
-        return labels[top_k[0]]
+        return labels[top_k[0]], time_ms
     else:
-        return labels[top_k[0]]
+        return labels[top_k[0]], time_ms
 
 
 App = Flask(__name__)
@@ -75,9 +90,8 @@ def upload_file():
             filename = secure_filename(file.filename)
             file_path = os.path.join(App.config['UPLOAD_FOLDER'], filename)
             file.save(file_path)
-            output = predict(file_path)
-            print('output', output)
-    return render_template("home.html", label=output, imagesource=file_path)
+            output, inference_time = predict(file_path)
+    return render_template("home.html", label=output, label_=inference_time, imagesource=file_path)
 
 
 @App.route('/uploads/<filename>')
@@ -87,5 +101,7 @@ def uploaded_file(filename):
 
 
 if __name__ == "__main__":
+
+    interpreter = load_model('mobilenet_v1_1.0_224_quant.tflite')
     port = int(os.environ.get('PORT', 8080))
     App.run(debug=False, host='0.0.0.0', port=port)
