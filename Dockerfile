@@ -1,5 +1,5 @@
 FROM arm64v8/ubuntu
-ENV TZ=America/Los_Angeles
+ENV TZ=America/Toronto
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt-get update && \
