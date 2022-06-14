@@ -29,7 +29,7 @@ jobs:
          context: .
          file: ./Dockerfile
          push: true
-         tags: ${{ secrets.DOCKER_USERNAME }}/ml-app-image:latest
+         tags: ${{ secrets.DOCKER_USERNAME }}/ml-app-image-self-hosted:latest
 
   test_image:
     needs: [build_image]
