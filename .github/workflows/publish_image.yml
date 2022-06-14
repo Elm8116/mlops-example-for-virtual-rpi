@@ -6,9 +6,7 @@ on:
 
 jobs:
   build_image:
-    runs-on: ubuntu-latest
-    env: 
-       DOCKER_TARGET_PLATFORM: linux/arm/v8
+    runs-on: self-hosted
     steps:
       - name: Checkout
         uses: actions/checkout@v3
