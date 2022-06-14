@@ -20,7 +20,7 @@ WORKDIR /app
 # copy all files into image
 ADD . /app
 
-RUN pip install --trusted-host pypi.python.org -r requirements.txt
+RUN pip install -r requirements.txt
 RUN cd .. && cp ArmNN-aarch64/libarmnn.so.28 /app && cp ArmNN-aarch64/libarmnnDelegate.so.25 /app
 
 EXPOSE 8080
