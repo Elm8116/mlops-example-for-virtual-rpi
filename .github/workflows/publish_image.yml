@@ -40,6 +40,7 @@ jobs:
          push: true
          tags: ${{ secrets.DOCKER_USERNAME }}/ml-app-pi:latest
 
+
 #   test_image:
 #     needs: [build_image]
 #     runs-on: self-hosted
