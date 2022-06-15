@@ -36,4 +36,4 @@ jobs:
     runs-on: self-hosted
     steps:
     - name: Run Unit Test
-      run: docker run "${{ secrets.DOCKER_USERNAME }}/ml-app-image:latest" -m unittest --verbose --failfast
+      run: docker run "${{ secrets.DOCKER_USERNAME }}/ml-app-image-self-hosted:latest" -m unittest --verbose --failfast
