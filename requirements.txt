@@ -5,4 +5,5 @@ pip
 pytest
 pytest-flask
 pillow
---extra-index-url https://google-coral.github.io/py-repo/ tflite_runtime
+tflite_runtime
+#--extra-index-url https://google-coral.github.io/py-repo/ tflite_runtime
