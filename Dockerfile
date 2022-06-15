@@ -2,11 +2,10 @@ FROM arm64v8/ubuntu
 ENV TZ=America/Toronto
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-RUN apt-get update && \
-	apt-get -y install -y sudo  \
-    python3.8 \
+RUN apt-get update && apt-get upgrade && \
+    apt-get -y install -y sudo  \
+    python3 \
     python3-pip \
-    python3.8-dev \
     qemu binfmt-support qemu-user-static \
     wget
 
