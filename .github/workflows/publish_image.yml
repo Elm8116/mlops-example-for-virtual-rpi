@@ -14,8 +14,8 @@ jobs:
       - name: Build the docker image
         run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/ml-app-pi:latest
         
-      - name: Run unit test inside docker container
-        run: docker run -d "${{ secrets.DOCKER_USERNAME }}/ml-app-pi:latest" -m unittest --verbose --failfast
+#       - name: Run unit test inside docker container
+#         run: docker run -d "${{ secrets.DOCKER_USERNAME }}/ml-app-pi:latest" -m unittest --verbose --failfast
 
   
       - name: Login to Docker Hub
