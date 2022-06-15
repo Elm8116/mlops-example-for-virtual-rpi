@@ -1,13 +1,15 @@
-FROM arm64v8/ubuntu
-ENV TZ=America/Toronto
+FROM python:3.8-slim-buster
 
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-RUN apt-get update && apt-get upgrade && \
-    apt-get -y install -y sudo  \
-    python3 \
-    python3-pip \
-    qemu binfmt-support qemu-user-static \
-    wget
+# FROM arm64v8/ubuntu
+# ENV TZ=America/Toronto
+
+# RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+# RUN apt-get update && \
+#     apt-get -y install -y sudo  \
+#     python3 \
+#     python3-pip \
+#     qemu binfmt-support qemu-user-static \
+#     wget
 
 
 RUN wget -O ArmNN-aarch64.tgz https://github.com/ARM-software/armnn/releases/download/v22.02/ArmNN-linux-aarch64.tar.gz \
