@@ -23,9 +23,9 @@ ADD . /app
 RUN pip install -r requirements.txt
 RUN cd .. && cp ArmNN-aarch64/libarmnn.so.28 /app && cp ArmNN-aarch64/libarmnnDelegate.so.25 /app
 
-EXPOSE 8080
+# EXPOSE 8080
 
-# execute the Flask app in the container
-ENTRYPOINT ["python3"]
-HEALTHCHECK CMD curl --fail http://localhost:8080 || exit 1
-CMD ["app.py"]
+# # execute the Flask app in the container
+# ENTRYPOINT ["python3"]
+# HEALTHCHECK CMD curl --fail http://localhost:8080 || exit 1
+# CMD ["app.py"]
