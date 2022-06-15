@@ -1,4 +1,5 @@
 FROM python:3.8-slim-buster
+RUN apt-get -y update && apt-get install -y wget
 
 # FROM arm64v8/ubuntu
 # ENV TZ=America/Toronto
