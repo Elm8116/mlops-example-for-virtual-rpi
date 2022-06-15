@@ -1,5 +1,5 @@
 Flask
-numpy==1.19.2
+numpy
 flake8
 pip
 pytest
