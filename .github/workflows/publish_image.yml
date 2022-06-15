@@ -33,7 +33,7 @@ jobs:
 
   test_image:
     needs: [build_image]
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
     - name: Run Unit Test
       run: docker run "${{ secrets.DOCKER_USERNAME }}/ml-app-image:latest" -m unittest --verbose --failfast
