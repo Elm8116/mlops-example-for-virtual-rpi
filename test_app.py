@@ -18,7 +18,5 @@ class Tests(unittest.TestCase):
         res = self.app.get('/null')
         assert res.status == '404 NOT FOUND'
 
-
-
 if __name__ == "__main__":
     unittest.main()
