@@ -18,7 +18,6 @@ class Tests(unittest.TestCase):
         res = self.app.get('/null')
         assert res.status == '404 NOT FOUND'
 
-    # add uint test for the model
 
 
 if __name__ == "__main__":
