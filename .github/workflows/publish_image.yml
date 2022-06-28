@@ -37,7 +37,7 @@ jobs:
      - name: stop all containers
        run: ./stop_containers.sh
        
-     - name: deploy to virtual raspberry pi 4
+     - name: run the container on virtual raspberry pi 
        run:
         docker run -d -p 0.0.0.0:8080:8080 ${{ secrets.DOCKER_USERNAME }}/ml-app-pi:latest
       
