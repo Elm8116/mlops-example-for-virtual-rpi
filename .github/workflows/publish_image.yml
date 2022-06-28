@@ -39,5 +39,5 @@ jobs:
        
      - name: deploy to virtual raspberry pi 4
        run:
-        docker run -d -p 0.0.0.0:8080:8080 ${{ secrets.DOCKER_USERNAME }}/ml-app-pi-test:latest
+        docker run -d -p 0.0.0.0:8080:8080 ${{ secrets.DOCKER_USERNAME }}/ml-app-pi:latest
       
