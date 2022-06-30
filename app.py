@@ -1,9 +1,11 @@
 import os
 from flask import Flask, request, send_from_directory, render_template
+import tflite_runtime.interpreter as tflite
 import numpy as np
 from PIL import Image
 from werkzeug.utils import secure_filename
 import tritonclient.http as tritonhttpclient
+import time
 
 
 ALLOWED_EXTENSIONS = set(['jpg', 'jpeg', 'png'])
@@ -26,6 +28,21 @@ label_path = './models/tflite_model/labels.txt'
 def load_labels(filename):
     with open(filename, 'r') as f:
         return [line.strip() for line in f.readlines()]
+
+
+# load model and allocate tensors
+# def load_model(model_path):
+#
+#     armnn_delegate = tflite.load_delegate('./libarmnnDelegate.so.25',
+#                                           options={
+#                                               "backends": "CpuAcc, CpuRef, GpuAcc ",
+#                                               "logging-severity": "info"
+#                                           }
+#                                           )
+#     model = tflite.Interpreter(model_path, experimental_delegates=[armnn_delegate])
+#     model.allocate_tensors()
+#
+#     return model
 
 
 def allowed_file(filename):
@@ -77,6 +94,7 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             img_file_path = os.path.join(App.config['UPLOAD_FOLDER'], filename)
+            # file.save(file_path)
             output = predict(img_file_path)
     return render_template("home.html", label=output, imagesource=img_file_path)
 
@@ -88,5 +106,7 @@ def uploaded_file(filename):
 
 
 if __name__ == "__main__":
+
+    # interpreter = load_model('mobilenet_v1_1.0_224_quant.tflite')
     port = int(os.environ.get('PORT', 8080))
     App.run(debug=False, host='0.0.0.0', port=port)
