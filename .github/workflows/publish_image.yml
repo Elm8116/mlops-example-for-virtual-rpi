@@ -15,6 +15,8 @@ jobs:
         run: | 
             pwd
             ls
+            echo ${GITHUB_WORKSPACE}
+            ls ${GITHUB_WORKSPACE}
         
       - name: Build the docker image
         run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/ml-app-pi:latest
