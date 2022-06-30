@@ -5,4 +5,4 @@ pytest
 pytest-flask
 pillow
 tflite_runtime
-tritonclient\[all\]
+tritonclient
