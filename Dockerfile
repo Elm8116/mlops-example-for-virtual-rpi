@@ -11,6 +11,7 @@ WORKDIR /app
 # copy all files into image
 ADD . /app
 
+RUN pip install tritonclient\[all\]
 RUN pip install -r requirements.txt
 # RUN cd .. && cp ArmNN-aarch64/libarmnn.so.28 /app && cp ArmNN-aarch64/libarmnnDelegate.so.25 /app
 
