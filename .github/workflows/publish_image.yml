@@ -15,8 +15,8 @@ jobs:
         run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/ml-app-pi:latest
 
       - name: Invoke Server
-        run: docker run -v "${{secrets.GITHUB_WORKSPACE}}/models:/models -dp 8000:8000 -dp 8001:8001 -dp 8002:8002 /invoke_server.sh ghcr.io/jishminor/server/tritonserver:2.15.0_armnn_v21.08_ruy_on_gpu_off_backendver_v0.2.0_release
-
+        run: docker run -v "${{secrets.GITHUB_WORKSPACE}}//models:/models -dp 8000:8000 -dp 8001:8001 -dp 8002:8002 elham8116/inferenceserver ./invoke_server.sh
+        
       - name: Run unit test inside docker container
         run: docker run "${{ secrets.DOCKER_USERNAME }}/ml-app-pi:latest" -m unittest --verbose --failfast
 
@@ -41,7 +41,7 @@ jobs:
        run: ./stop_containers.sh
 
      - name: Invoke Server
-       run: docker run -v "${{ secrets.GITHUB_WORKSPACE }}/models:/models -dp 8000:8000 -dp 8001:8001 -dp 8002:8002 /invoke_server.sh ghcr.io/jishminor/server/tritonserver:2.15.0_armnn_v21.08_ruy_on_gpu_off_backendver_v0.2.0_release
+       run: docker run -v "${{secrets.GITHUB_WORKSPACE}}//models:/models -dp 8000:8000 -dp 8001:8001 -dp 8002:8002 elham8116/inferenceserver ./invoke_server.sh
 
      - name: run the container on virtual raspberry pi 
        run:
