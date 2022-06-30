@@ -1,9 +1,9 @@
 FROM python:3.8-slim-buster
 RUN apt-get -y update && apt-get install -y wget
 
-RUN wget -O ArmNN-aarch64.tgz https://github.com/ARM-software/armnn/releases/download/v22.02/ArmNN-linux-aarch64.tar.gz \
-&& mkdir -p ArmNN-aarch64 \
-&& tar -xvf ArmNN-aarch64.tgz -C ArmNN-aarch64
+# RUN wget -O ArmNN-aarch64.tgz https://github.com/ARM-software/armnn/releases/download/v22.02/ArmNN-linux-aarch64.tar.gz \
+# && mkdir -p ArmNN-aarch64 \
+# && tar -xvf ArmNN-aarch64.tgz -C ArmNN-aarch64
 
 # creating a working directory so we do not need to type a full file paths and can use relative paths based on working directory
 WORKDIR /app
@@ -12,7 +12,7 @@ WORKDIR /app
 ADD . /app
 
 RUN pip install -r requirements.txt
-RUN cd .. && cp ArmNN-aarch64/libarmnn.so.28 /app && cp ArmNN-aarch64/libarmnnDelegate.so.25 /app
+# RUN cd .. && cp ArmNN-aarch64/libarmnn.so.28 /app && cp ArmNN-aarch64/libarmnnDelegate.so.25 /app
 
 
 EXPOSE 8080
