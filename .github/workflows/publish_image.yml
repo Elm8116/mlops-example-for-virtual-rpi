@@ -41,7 +41,7 @@ jobs:
        run: ./stop_containers.sh
 
      - name: Invoke Server
-         run: docker run -v "${{ GITHUB_WORKSPACE }}/models:/models -dp 8000:8000 -dp 8001:8001 -dp 8002:8002 /invoke_server.sh ghcr.io/jishminor/server/tritonserver:2.15.0_armnn_v21.08_ruy_on_gpu_off_backendver_v0.2.0_release
+       run: docker run -v "${{ GITHUB_WORKSPACE }}/models:/models -dp 8000:8000 -dp 8001:8001 -dp 8002:8002 /invoke_server.sh ghcr.io/jishminor/server/tritonserver:2.15.0_armnn_v21.08_ruy_on_gpu_off_backendver_v0.2.0_release
 
      - name: run the container on virtual raspberry pi 
        run:
