@@ -1,4 +1,4 @@
-FROM python:3.8-slim-buster
+FROM arm64v8/python:3.8-slim-buster
 RUN apt-get -y update && apt-get install -y wget
 
 
@@ -9,7 +9,7 @@ WORKDIR /app
 ADD . /app
 
 RUN pip install -r requirements.txt
-RUN pip install tritonclient[all]
+RUN pip install tritonclient\[all]\
 
 
 EXPOSE 8080
