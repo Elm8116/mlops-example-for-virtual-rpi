@@ -1,9 +1,7 @@
 FROM python:3.8-slim-buster
 RUN apt-get -y update && apt-get install -y wget
 
-# RUN wget -O ArmNN-aarch64.tgz https://github.com/ARM-software/armnn/releases/download/v22.02/ArmNN-linux-aarch64.tar.gz \
-# && mkdir -p ArmNN-aarch64 \
-# && tar -xvf ArmNN-aarch64.tgz -C ArmNN-aarch64
+RUN pip install --upgrade pip
 
 # creating a working directory so we do not need to type a full file paths and can use relative paths based on working directory
 WORKDIR /app
