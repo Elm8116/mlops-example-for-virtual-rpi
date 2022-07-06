@@ -1,3 +1,4 @@
+wheel
 Flask
 numpy==1.19.2
 flake8
