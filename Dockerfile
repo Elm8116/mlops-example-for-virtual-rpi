@@ -1,6 +1,6 @@
 FROM python:3.8-slim-buster
 RUN apt-get -y update && apt-get install -y wget
-
+RUN pip install tritonclient\[all\]
 
 # creating a working directory so we do not need to type a full file paths and can use relative paths based on working directory
 WORKDIR /app
@@ -8,7 +8,6 @@ WORKDIR /app
 # copy all files into image
 ADD . /app
 
-RUN pip install tritonclient\[all\]
 RUN pip install -r requirements.txt
 
 
