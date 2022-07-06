@@ -1,5 +1,5 @@
-FROM arm64v8/python:3.8-slim-buster
-RUN apt-get -y update && apt-get install -y wget
+FROM arm64v8/python:3.8
+RUN apt-get -y update 
 
 
 # creating a working directory so we do not need to type a full file paths and can use relative paths based on working directory
@@ -8,8 +8,9 @@ WORKDIR /app
 # copy all files into image
 ADD . /app
 
-RUN pip install -r requirements.txt
 RUN pip install tritonclient\[all\]
+RUN pip install -r requirements.txt
+
 
 
 EXPOSE 8080
