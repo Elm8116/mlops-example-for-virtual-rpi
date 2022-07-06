@@ -1,7 +1,6 @@
 Flask
-numpy==1.19.2
+numpy
 flake8
 pytest
 pytest-flask
 pillow
-python-rapidjson
