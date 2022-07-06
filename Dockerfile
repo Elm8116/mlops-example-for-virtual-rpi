@@ -9,7 +9,7 @@ WORKDIR /app
 ADD . /app
 
 RUN pip install -r requirements.txt
-RUN pip install tritonclient\[all]\
+RUN pip install tritonclient\[all\]
 
 
 EXPOSE 8080
