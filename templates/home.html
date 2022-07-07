@@ -13,6 +13,7 @@
    <p class="lead">Upload your image to find out class label</p>
     <form action="" method=post enctype=multipart/form-data>
         <input type=file name=file>
+
         <input type=submit value=Upload>
     </form>
 
@@ -27,11 +28,12 @@
                   <th scope="col">Image Preview</th>
                   <th scope="col">Predict label</th>
 <!--                    <th scope="col"> Inference Time (ms)</th>-->
+
                 </tr>
                 <tr>
                     <th scope="row"> <img width="224" height="224" src="{{imagesource}}" /> </th>
                     <td> {{label}} </td>
-                    <td> {{label_}} </td>
+<!--                    <td> {{label_}} </td>-->
                   </tr>
             </table>
     </div>
@@ -42,4 +44,3 @@
 
  </body>
  </html>
-
