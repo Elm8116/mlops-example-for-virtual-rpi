@@ -1,11 +1,9 @@
 import os
 from flask import Flask, request, send_from_directory, render_template
-import tflite_runtime.interpreter as tflite
 import numpy as np
 from PIL import Image
 from werkzeug.utils import secure_filename
 import tritonclient.http as tritonhttpclient
-
 
 ALLOWED_EXTENSIONS = set(['jpg', 'jpeg', 'png'])
 IMAGE_SIZE = (224, 224)
@@ -68,7 +66,7 @@ App.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @App.route("/")
 def template_test():
-    return render_template('home.html', imagesource='file://null')
+    return render_template('home.html', label='', imagesource='file://null')
 
 
 @App.route('/', methods=['GET', 'POST'])
@@ -79,7 +77,7 @@ def upload_file():
             filename = secure_filename(file.filename)
             img_file_path = os.path.join(App.config['UPLOAD_FOLDER'], filename)
             output = predict(img_file_path)
-    return render_template("home.html", imagesource=img_file_path)
+    return render_template("home.html", label=output, imagesource=img_file_path)
 
 
 @App.route('/uploads/<filename>')
@@ -87,7 +85,7 @@ def uploaded_file(filename):
     return send_from_directory(App.config['UPLOAD_FOLDER'],
                                filename)
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     port = int(os.environ.get('PORT', 8080))
     App.run(debug=False, host='0.0.0.0', port=port)
