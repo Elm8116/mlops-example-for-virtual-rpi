@@ -22,7 +22,7 @@ output_name = 'MobilenetV1/Predictions/Reshape_1'
 model_name = 'tflite_model'
 url = 'localhost:8000'
 model_version = '1'
-label_path = './models/tflite_model/labels.txt'
+label_path = '/models/tflite_model/labels.txt'
 
 
 def load_labels(filename):
