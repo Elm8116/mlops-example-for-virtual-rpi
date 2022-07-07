@@ -59,7 +59,6 @@ def predict(img_path):
 
     logits = response.as_numpy(output_name)
     logits = np.asarray(logits, dtype=np.float32)
-    print(labels[np.argmax(logits)])
     return labels[np.argmax(logits)]
 
 
@@ -69,7 +68,7 @@ App.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @App.route("/")
 def template_test():
-    return render_template('home.html', label='', imagesource='file://null')
+    return render_template('home.html', imagesource='file://null')
 
 
 @App.route('/', methods=['GET', 'POST'])
@@ -80,7 +79,7 @@ def upload_file():
             filename = secure_filename(file.filename)
             img_file_path = os.path.join(App.config['UPLOAD_FOLDER'], filename)
             output = predict(img_file_path)
-    return render_template("home.html", label=output, imagesource=img_file_path)
+    return render_template("home.html", imagesource=img_file_path)
 
 
 @App.route('/uploads/<filename>')
