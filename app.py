@@ -76,6 +76,7 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             img_file_path = os.path.join(App.config['UPLOAD_FOLDER'], filename)
+            file.save(img_file_path)
             output = predict(img_file_path)
     return render_template("home.html", label=output, imagesource=img_file_path)
 
