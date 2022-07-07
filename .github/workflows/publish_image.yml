@@ -43,11 +43,11 @@ jobs:
     needs: [build_image]
     runs-on: self-hosted
     steps:
-     - name: stop all containers
-       run: ./stop_containers.sh
+#      - name: stop all containers
+#        run: ./stop_containers.sh
 
-     - name: Invoke Server
-       run: docker run -v ${GITHUB_WORKSPACE}/models:/models -d --network host elham8116/inferenceserver ./invoke_server.sh
+#      - name: Invoke Server
+#        run: docker run -v ${GITHUB_WORKSPACE}/models:/models -d --network host elham8116/inferenceserver ./invoke_server.sh
 
      - name: run the container on virtual raspberry pi 
        run:
