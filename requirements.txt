@@ -1,6 +1,7 @@
 Flask
-numpy
+numpy==1.19.2
 flake8
 pytest
 pytest-flask
 pillow
+tflite_runtime
