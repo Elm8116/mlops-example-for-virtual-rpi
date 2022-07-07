@@ -59,6 +59,7 @@ def predict(img_path):
 
     logits = response.as_numpy(output_name)
     logits = np.asarray(logits, dtype=np.float32)
+    print(labels[np.argmax(logits)])
     return labels[np.argmax(logits)]
 
 
