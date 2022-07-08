@@ -7,10 +7,10 @@ such as continuous integration and continuous deployment CI/CD (DevOps) and MLOp
 
 The objective of this project is to automate the image classification web-application deployment process on virtual raspberry pi 4 using GitHub Actions.
 The workflow contains the following stages:
-1. Build a docker image for the web-application
+1. Build a docker image for the application using Dockerfile
 2. Invoke triton inference server with Arm NN backend
    * The models are served with [Triton Inference Server with Arm NN backend](https://gitlab.com/arm-research/smarter/armnn_tflite_backend) to accelerate inference
-3. Run Unittest
+3. Run Unittest to test Flask server by checking if it is retuning 200 status code
 4. Login to Docker Hub and Push image 
 5. Deploy the application on virtual raspberry pi
 
