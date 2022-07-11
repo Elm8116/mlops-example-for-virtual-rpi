@@ -21,11 +21,11 @@ The workflow contains the following stages:
 3. Select **CONSOLE** from device menu and login to your virtual device using the default username: _pi_ and password: _raspberry_ <br /><br />
 
 4. Connect to your virtual device via VPN <br />
-   1. download the .ovpn file from the Raspberry Pi 4's Connect tab 
-   2. connect to your virtual device using openvpn
+   * download the .ovpn file from the Raspberry Pi 4's Connect tab 
+   * connect to your virtual device using openvpn
    
       ```sudo openvpn --config ~/Downloads/AVH_config.ovpn```
-      * If you are on Mac OS or Windows OS, follow the steps in this [article](https://intercom.help/arm-avh/en/articles/6131455-connecting-to-the-vpn) to connect to your virtual device
+If you are on Mac OS or Windows OS, follow the steps in this [article](https://intercom.help/arm-avh/en/articles/6131455-connecting-to-the-vpn) to connect to your virtual device
 
 ### GitHub Actions
 
@@ -38,40 +38,40 @@ The workflow contains the following stages:
 2. Check if the service is running
 
    ```sudo systemctl status docker```
-
-   * in case identifying issues with the Device Kernel, follow the step in [Updating Raspberry Pi page](https://intercom.help/arm-avh/en/articles/6278501-updating-the-raspberry-pi-4-kernel#h_f3c477ba86) to fix the updated kernel <br /><br />
+<br /> 
+In case identifying issues with the Device Kernel, follow the steps in [Updating Raspberry Pi page](https://intercom.help/arm-avh/en/articles/6278501-updating-the-raspberry-pi-4-kernel#h_f3c477ba86) to fix the updated kernel <br /><br />
 3. Authenticate yourself with GitHub container registry following the steps in [GitHub page](https://github.com/Azure/actions-workflow-samples/blob/master/assets/create-secrets-for-GitHub-workflows.md)
    * select ```repo``` ```workflow``` ```write:packages``` ```delete:packages``` 
    * login to ghcr.io from your Raspberry Pi Console <br />
    ```sudo cat ~/githubtoken.txt | docker login https://ghcr.io -u <username> --password-stdin```
 <br /><br />
-   
 4. Authenticate yourself with Docker Hub and use your Docker Hub username ```DOCKER_USERNAME``` and ```password DOCKER_PASSWOR``` as secrets in your GitHub repo. To do so, follow these steps:
-   1. sign in to Docker Hub
-   2. select account settings on the top right of the page
-   3. select security tab from the left sidebar 
-   4. generate NEW Access Token and save it
+   * sign in to Docker Hub
+   * select account settings on the top right of the page
+   * select security tab from the left sidebar 
+   * generate NEW Access Token and save it <br /><br />
+5. From Docker Hub dashboard, click Create Repository and type name ```ml-app-pi``` in the Name section 
 
 
    
 **Note**: You need to [Sign Up](https://hub.docker.com/signup) to Docker Hub if you do not have an account.
 <br /><br />
 
-5. Generate an AVH API Token following the steps in [Generating an API Token](https://intercom.help/arm-avh/en/articles/6137393-generating-an-avh-api-token) article. 
+6. Generate an AVH API Token following the steps in [Generating an API Token](https://intercom.help/arm-avh/en/articles/6137393-generating-an-avh-api-token) article. 
 <br /><br />
-6. Clone the repository <br /><br />
-7. Set up Secrets in GitHub Action workflows to accept jobs 
-   1. navigate to the main page of your repository
-   2. click on the "Setting" tab on the top of the page
-   3. in the left sidebar, click Secrets and select Actions
-   4. on the right bar, click on "New repository secret"
-   5. add "API_TOKEN" secret to your repository with a value of your API Token
-   6. add ```DOCKER_USERNAME``` and ```password DOCKER_PASSWOR``` secrets to your repository with a value of your username and a token generated in step 4
+7. Select Raspberry Pi 4 CONSOLE tab and clone the repository <br /><br />
+8. Set up Secrets in GitHub Action workflows to accept jobs 
+   * navigate to the main page of your repository
+   * click on the "Setting" tab on the top of the page
+   * in the left sidebar, click Secrets and select Actions
+   * on the right bar, click on "New repository secret"
+   * add "API_TOKEN" secret to your repository with a value of your API Token
+   * add ```DOCKER_USERNAME``` and ```password DOCKER_PASSWOR``` secrets to your repository with a value of your username and a token generated in step 4
 <br /><br />
-7. [Add Self Hosted Runner](https://docs.github.com/en/actions/hosting-your-own-runners/adding-self-hosted-runners) to the repository and select "Linux" as the OS and "ARM64" as the architecture <br /><br />
-8. From Raspberry Pi 4 CONSOLE tab, run the commands referenced in the previous step <br /><br />
-9. Navigate to ```actions_runner``` directory and start the runner: <br />
-   ```cd actions_runner```<br />
-   ``` ./run.sh```
+9. [Add Self Hosted Runner](https://docs.github.com/en/actions/hosting-your-own-runners/adding-self-hosted-runners) to the repository and select "Linux" as the OS and "ARM64" as the architecture <br /><br />
+10. From Raspberry Pi 4 CONSOLE tab, run the commands referenced in the previous step <br /><br />
+11. Navigate to ```actions_runner``` directory and start the runner: <br />
+    ```cd actions_runner```<br />
+    ``` ./run.sh```
 
 
