@@ -6,6 +6,7 @@ It utilizes cloud-based servers and enable modern agile software development pra
 such as continuous integration and continuous deployment CI/CD (DevOps) and MLOps workflows to software developers. 
 
 The objective of this project is to automate the image classification web-application deployment process on virtual raspberry pi 4 using GitHub Actions.
+
 The workflow contains the following stages:
 1. Build a docker image for the application using Dockerfile
 2. Invoke triton inference server with Arm NN backend
@@ -18,6 +19,7 @@ The workflow contains the following stages:
 1. Login to your Arm Virtual Hardware account at https://app.avh.arm.com/ <br /><br />
 2. Create virtual Raspberry Pi 4 Device and Choose Raspberry Pi OS lite (11.2.0) <br /><br />
 3. Select **CONSOLE** from device menu and login to your virtual device using the default username: _pi_ and password: _raspberry_ <br /><br />
+
 4. Connect to your virtual device via VPN <br />
    1. download the .ovpn file from the Raspberry Pi 4's Connect tab 
    2. connect to your virtual device using openvpn
@@ -37,31 +39,39 @@ The workflow contains the following stages:
 
    ```sudo systemctl status docker```
 
-   * in case having a failed state, fix the updated kernel following the steps in [Updating Raspberry Pi page](https://intercom.help/arm-avh/en/articles/6278501-updating-the-raspberry-pi-4-kernel#h_f3c477ba86) in case identifying issues with the Device Kernel <br /><br />
+   * in case identifying issues with the Device Kernel, follow the step in [Updating Raspberry Pi page](https://intercom.help/arm-avh/en/articles/6278501-updating-the-raspberry-pi-4-kernel#h_f3c477ba86) to fix the updated kernel <br /><br />
 3. Authenticate yourself with GitHub container registry following the steps in [GitHub page](https://github.com/Azure/actions-workflow-samples/blob/master/assets/create-secrets-for-GitHub-workflows.md)
    * select ```repo``` ```workflow``` ```write:packages``` ```delete:packages``` 
    * login to ghcr.io from your Raspberry Pi Console <br />
    ```sudo cat ~/githubtoken.txt | docker login https://ghcr.io -u <username> --password-stdin```
-<br />
+<br /><br />
+   
+4. Authenticate yourself with Docker Hub and use your Docker Hub username ```DOCKER_USERNAME``` and ```password DOCKER_PASSWOR``` as secrets in your GitHub repo. To do so, follow these steps:
+   1. sign in to Docker Hub
+   2. select account settings on the top right of the page
+   3. select security tab from the left sidebar 
+   4. generate NEW Access Token and save it
+
+
    
 **Note**: You need to [Sign Up](https://hub.docker.com/signup) to Docker Hub if you do not have an account.
 <br /><br />
-4. Generate an AVH API Token following the steps in [Generating an API Token](https://intercom.help/arm-avh/en/articles/6137393-generating-an-avh-api-token) article. 
+
+5. Generate an AVH API Token following the steps in [Generating an API Token](https://intercom.help/arm-avh/en/articles/6137393-generating-an-avh-api-token) article. 
 <br /><br />
-5. Clone the repository <br /><br />
-6. Set up Secrets in GitHub Action workflows to accept jobs 
+6. Clone the repository <br /><br />
+7. Set up Secrets in GitHub Action workflows to accept jobs 
    1. navigate to the main page of your repository
    2. click on the "Setting" tab on the top of the page
    3. in the left sidebar, click Secrets and select Actions
    4. on the right bar, click on "New repository secret"
    5. add "API_TOKEN" secret to your repository with a value of your API Token
+   6. add ```DOCKER_USERNAME``` and ```password DOCKER_PASSWOR``` secrets to your repository with a value of your username and a token generated in step 4
 <br /><br />
 7. [Add Self Hosted Runner](https://docs.github.com/en/actions/hosting-your-own-runners/adding-self-hosted-runners) to the repository and select "Linux" as the OS and "ARM64" as the architecture <br /><br />
 8. From Raspberry Pi 4 CONSOLE tab, run the commands referenced in the previous step <br /><br />
-9. Navigate to ```actions_runner``` directory and start the runner using the following commands <br />
+9. Navigate to ```actions_runner``` directory and start the runner: <br />
    ```cd actions_runner```<br />
    ``` ./run.sh```
-
-
 
 
