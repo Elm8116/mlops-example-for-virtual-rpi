@@ -1,7 +1,7 @@
 ## Building MLOps Pipelines with GitHub Actions on ARM Virtual Raspberry Pi 4  
 
 ARM virtual Raspberry Pi 4 virtualizes the functional behavior of SoCs and development kits,
-including peripherals, sensors, and other board components of Raspberry Pi development board. 
+including peripherals, sensors, and other components of Raspberry Pi development board. 
 It utilizes cloud-based servers and enable modern agile software development practices,
 such as continuous integration and continuous deployment CI/CD (DevOps) and MLOps workflows to software developers. 
 
