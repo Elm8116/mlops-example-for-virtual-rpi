@@ -38,8 +38,8 @@ If you are on Mac OS or Windows OS, follow the steps in this [article](https://i
 2. Check if the service is running
 
    ```sudo systemctl status docker```
-<br /> 
-In case identifying issues with the Device Kernel, follow the steps in [Updating Raspberry Pi page](https://intercom.help/arm-avh/en/articles/6278501-updating-the-raspberry-pi-4-kernel#h_f3c477ba86) to fix the updated kernel <br /><br />
+   
+<br />  In case identifying issues with the Device Kernel, follow the steps in [Updating Raspberry Pi page](https://intercom.help/arm-avh/en/articles/6278501-updating-the-raspberry-pi-4-kernel#h_f3c477ba86) to fix the updated kernel <br /><br />
 3. Authenticate yourself with GitHub container registry following the steps in [GitHub page](https://github.com/Azure/actions-workflow-samples/blob/master/assets/create-secrets-for-GitHub-workflows.md)
    * select ```repo``` ```workflow``` ```write:packages``` ```delete:packages``` 
    * login to ghcr.io from your Raspberry Pi Console <br />
@@ -66,7 +66,7 @@ In case identifying issues with the Device Kernel, follow the steps in [Updating
    * in the left sidebar, click Secrets and select Actions
    * on the right bar, click on "New repository secret"
    * add "API_TOKEN" secret to your repository with a value of your API Token
-   * add ```DOCKER_USERNAME``` and ```password DOCKER_PASSWOR``` secrets to your repository with a value of your username and a token generated in step 4
+   * add ```DOCKER_USERNAME``` and ```DOCKER_PASSWOR``` secrets to your repository with a value of your username and a token generated in step 4
 <br /><br />
 9. [Add Self Hosted Runner](https://docs.github.com/en/actions/hosting-your-own-runners/adding-self-hosted-runners) to the repository and select "Linux" as the OS and "ARM64" as the architecture <br /><br />
 10. From Raspberry Pi 4 CONSOLE tab, run the commands referenced in the previous step <br /><br />
