@@ -11,13 +11,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         
-#       - name: working dir
-#         run: | 
-#             pwd
-#             echo ${GITHUB_WORKSPACE}
-#             ls ${GITHUB_WORKSPACE}
-#             ls ./models
-        
       - name: Build the docker image
         run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/ml-app-pi:latest
 
