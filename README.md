@@ -40,7 +40,7 @@ If you are on Mac OS or Windows OS, follow the steps in this [article](https://i
    ```sudo systemctl status docker```
    
 <br />  In case identifying issues with the Device Kernel, follow the steps in [Updating Raspberry Pi page](https://intercom.help/arm-avh/en/articles/6278501-updating-the-raspberry-pi-4-kernel#h_f3c477ba86) to fix the updated kernel <br /><br />
-3. Authenticate yourself with GitHub container registry following the steps in [GitHub page](https://github.com/Azure/actions-workflow-samples/blob/master/assets/create-secrets-for-GitHub-workflows.md)
+3. Authenticate yourself with GitHub container registry following the steps in [GitHub page](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry#authenticating-to-the-container-registry)
    * select ```repo``` ```workflow``` ```write:packages``` ```delete:packages``` 
    * login to ghcr.io from your Raspberry Pi Console <br />
    ```sudo cat ~/githubtoken.txt | docker login https://ghcr.io -u <username> --password-stdin```
