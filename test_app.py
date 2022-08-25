@@ -1,3 +1,8 @@
+#
+# SPDX-FileCopyrightText: Copyright 2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
+# SPDX-License-Identifier: MIT
+#
+
 """A module for testing our Flask server by checking if it is returning 200 status code"""
 import unittest
 from app import App
