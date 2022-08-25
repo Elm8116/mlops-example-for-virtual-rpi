@@ -15,7 +15,7 @@ jobs:
     steps:
     
         - name: Echo SHA
-          run: echo $GITHUB_SHA
+          run: echo "$GITHUB_SHA"
     
 #       - name: Checkout
 #         uses: actions/checkout@v3
