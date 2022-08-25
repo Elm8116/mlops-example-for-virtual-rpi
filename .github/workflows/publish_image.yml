@@ -14,14 +14,11 @@ jobs:
     runs-on: self-hosted
     steps:
     
-        - name: Echo SHA
-          run: echo "$GITHUB_SHA"
-    
-#       - name: Checkout
-#         uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
         
-#       - name: Stop and remove server container if exists
-#         run: docker ps -q --filter "name= server-"${{GITHUB_SHA}}"" | grep -q . && echo Found || echo Not Found
+      - name: Stop and remove server container if exists
+        run: docker ps -q --filter "name= server-"$GITHUB_SHA"" | grep -q . && echo Found || echo Not Found
         
 #       - name: Build the docker image
 #         run: docker build . --file Dockerfile --tag ${{ secrets.DOCKER_USERNAME }}/ml-app-pi:latest
