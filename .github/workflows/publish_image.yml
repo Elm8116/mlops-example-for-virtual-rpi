@@ -46,7 +46,7 @@ jobs:
             
 #       - name: Push Image to Docker Hub
 #         run:
-          docker push ${{ secrets.DOCKER_USERNAME }}/ml-app-pi:latest
+#          docker push ${{ secrets.DOCKER_USERNAME }}/ml-app-pi:latest
             
 
       
