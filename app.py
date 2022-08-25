@@ -1,3 +1,8 @@
+#
+# SPDX-FileCopyrightText: Copyright 2022 Arm Limited and/or its affiliates <open-source-office@arm.com>
+# SPDX-License-Identifier: MIT
+#
+
 import os
 from flask import Flask, request, send_from_directory, render_template
 import numpy as np
