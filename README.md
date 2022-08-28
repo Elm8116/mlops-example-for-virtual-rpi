@@ -74,10 +74,9 @@ optimization { execution_accelerators {
 
 
 ### Set up and Configure Virtual Raspberry Pi 4 
-1. Login to your Arm Virtual Hardware account at https://app.avh.arm.com/ <br /><br />
-2. Create virtual Raspberry Pi 4 Device and Choose Raspberry Pi OS lite (11.2.0) <br /><br />
-3. Select **CONSOLE** from device menu and login to your virtual device using the default username: _pi_ and password: _raspberry_ <br /><br />
-
+1. Login to your Arm Virtual Hardware account at https://app.avh.arm.com/ <br />
+2. Create virtual Raspberry Pi 4 Device and Choose Raspberry Pi OS lite (11.2.0) <br />
+3. Select **CONSOLE** from device menu and login to your virtual device using the default username: _pi_ and password: _raspberry_ <br />
 4. Connect to your virtual device via VPN <br />
    * download the .ovpn file from the Raspberry Pi 4's Connect tab 
    * connect to your virtual device using openvpn
