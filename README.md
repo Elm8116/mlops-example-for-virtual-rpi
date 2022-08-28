@@ -15,6 +15,64 @@ The workflow contains the following stages:
 4. Login to Docker Hub and Push image 
 5. Deploy the application on virtual raspberry pi
 
+
+### Prerequisites 
+
+#### Triton Inference Server Model Repository Layout
+To load the model in triton inference server with Arm NN backend, a model repository with the following structure should be created. These repository paths are specified when triton is started using ```--model-reposiotry``` option. Find more details about the model repository and directory structure in Triton inference server from [documentation](https://github.com/triton-inference-server/server/blob/r20.12/docs/model_repository.md). The below is an example model repository layout for MobileNet:   
+``` models
+├── tflite_model
+│   ├── 1
+│   │   └── model.tflite
+│   └── config.pbtxt
+|   └── labels.txt
+```
+#### Download MobileNet model in its subdirectory 
+
+```
+# Get the model 
+$ mkdir mobilenet 
+$ curl http://download.tensorflow.org/models/mobilenet_v1_2018_08_02/mobilenet_v1_1.0_224.tgz | tar xvz -C ./mobilenet
+
+# Get labels corresponding to each image 
+$ curl https://storage.googleapis.com/download.tensorflow.org/models/mobilenet_v1_1.0_224_frozen.tgz | tar xzv –C ./mobilenet 
+
+$ mkdir -p models/tflite_model/1 
+
+$ mv mobilenet/mobilenet_v1_1.0_224.tflite models/tflite_model/1
+
+$ cp mobilenet/mobilenet_v1_1.0_224/labels.txt models/tflite_model
+```
+
+#### Triton Inference Server Model Configuration and Runtime Optimization with Am NN Delegate 
+Each model in the model repository must include a model config that provides required and optional information about the model such as Name, Platform and Backend. To accelerate inference on Raspberry Pi with Cortex-A72 processor use cpu acceleration with ```armnn``` parameter in the optimization model configuration as follow:
+
+``` configuration = """
+name: "tflite_model"
+backend: "armnn_tflite"
+max_batch_size: 0
+input [
+ {
+   name: "input"
+   data_type: TYPE_FP32
+   dims: [ 1, 244, 244, 3 ]
+ }
+]
+output [
+ {
+   name: "MobilenetV1/Predictions/Reshape_1"
+   data_type: TYPE_FP32
+   dims: [ 1, 1001 ]
+ },
+
+]
+optimization { execution_accelerators {
+ cpu_execution_accelerator : [ { name : "armnn" } ]
+}}
+""" 
+```
+
+
 ### Set up and Configure Virtual Raspberry Pi 4 
 1. Login to your Arm Virtual Hardware account at https://app.avh.arm.com/ <br /><br />
 2. Create virtual Raspberry Pi 4 Device and Choose Raspberry Pi OS lite (11.2.0) <br /><br />
