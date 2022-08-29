@@ -13,6 +13,7 @@ WORKDIR /app
 # copy all files into image
 ADD . /app
 
+RUN mkdir -p uploads
 RUN pip install tritonclient\[all\]
 RUN pip install -r requirements.txt
 
