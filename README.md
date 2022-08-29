@@ -76,7 +76,8 @@ optimization { execution_accelerators {
 ### Set up and Configure Virtual Raspberry Pi 4 
 1. Login to your Arm Virtual Hardware account at https://app.avh.arm.com/ 
 2. Create virtual Raspberry Pi 4 Device and Choose Raspberry Pi OS lite (11.2.0) 
-3. Select **CONSOLE** from device menu and login to your virtual device using the default username: _pi_ and password: _raspberry_ 
+3. Select **CONSOLE** from device menu and login to your virtual device using the default username: _pi_ and 
+password: _raspberry_ 
 4. Connect to your virtual device via VPN 
    * download the .ovpn file from the Raspberry Pi 4's Connect tab 
    * connect to your virtual device using openvpn
@@ -85,8 +86,7 @@ optimization { execution_accelerators {
       
 If you are on Mac OS or Windows OS, follow the steps in this [article](https://intercom.help/arm-avh/en/articles/6131455-connecting-to-the-vpn) to connect to your virtual device
 
-### GitHub Actions
-
+### Set up Docker Hub and AVH API Tokens 
 1. Install Docker on Virtual Raspberry Pi 4
 
    ```sudo apt-get update```
@@ -101,7 +101,7 @@ If you are on Mac OS or Windows OS, follow the steps in this [article](https://i
    * select ```repo``` ```workflow``` ```write:packages``` ```delete:packages``` 
    * login to ghcr.io from your Raspberry Pi Console 
    ```sudo cat ~/githubtoken.txt | docker login https://ghcr.io -u <username> --password-stdin```
-4. Authenticate yourself with Docker Hub and use your Docker Hub username ```DOCKER_USERNAME``` and ```password DOCKER_PASSWOR``` as secrets in your GitHub repo. To do so, follow these steps:
+4. Authenticate yourself with Docker Hub and use your Docker Hub username ```DOCKERHUB_USERNAME``` and token ```DOCKERHUB_TOKEN``` as secrets in your GitHub repo. To do so, follow these steps:
    * sign in to Docker Hub
    * select account settings on the top right of the page
    * select security tab from the left sidebar 
@@ -110,18 +110,21 @@ If you are on Mac OS or Windows OS, follow the steps in this [article](https://i
    
 **Note**: You need to [Sign Up](https://hub.docker.com/signup) to Docker Hub if you do not have an account.
 
-6. Generate an AVH API Token following the steps in [Generating an API Token](https://intercom.help/arm-avh/en/articles/6137393-generating-an-avh-api-token) article. 
+6. Generate an AVH API Token following the steps in [Generating an API Token](https://intercom.help/arm-avh/en/articles/6137393-generating-an-avh-api-token) article and save it. 
 7. Select Raspberry Pi 4 CONSOLE tab and clone the repository 
 8. Set up Secrets in GitHub Action workflows to accept jobs 
    * navigate to the main page of your repository.
    * click on the "Setting" tab on the top of the page.
    * in the left sidebar, click Secrets and select Actions.
    * on the right bar, click on "New repository secret".
-   * add "API_TOKEN" secret to your repository with a value of your API Token.
-   * add ```DOCKER_USERNAME``` and ```DOCKER_PASSWOR``` secrets to your repository with a value of your username and a token generated in the step 4.
-9. [Add Self Hosted Runner](https://docs.github.com/en/actions/hosting-your-own-runners/adding-self-hosted-runners) to the repository and select "Linux" as the OS and "ARM64" as the architecture 
-10. From Raspberry Pi 4 CONSOLE tab, run the commands referenced in the previous step 
-11. Navigate to ```actions_runner``` directory and start the runner: 
+   * add ```API_TOKEN``` secret to your repository with a value of your API Token.
+   * add ```DOCKERHUB_USERNAME``` and ```DOCKERHUB_TOKEN``` secrets to your repository with a value of your username and a token generated in the step 4.
+   
+### Add Self-hosted Runner 
+
+1. [Add Self Hosted Runner](https://docs.github.com/en/actions/hosting-your-own-runners/adding-self-hosted-runners) to the repository and select "Linux" as the OS and "ARM64" as the architecture 
+2. From Raspberry Pi 4 CONSOLE tab, run the commands referenced in the previous step 
+3. Navigate to ```actions_runner``` directory and start the runner: 
 
     ```cd actions_runner```
 
