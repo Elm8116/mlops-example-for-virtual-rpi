@@ -19,17 +19,17 @@ jobs:
         
         
       - name: Testing filter definitions
-        run: docker ps -q --filter "name= server-""$GITHUB_SHA" | grep -q . && echo Found || echo Not Found
+        run: docker ps -q --filter "name= server" | grep -q . && echo Found || echo Not Found
         
       - name: Stop and remove server container if exists
-        run: docker ps -q --filter "name= server-""$GITHUB_SHA" | grep -q . && docker stop server-"$GITHUB_SHA" && docker rm -fv server-"$GITHUB_SHA"
+        run: docker ps -q --filter "name= server" | grep -q . && docker stop server && docker rm -fv server
         
         
       - name: Build the docker image
         run: docker build . --file Dockerfile --tag ${{ secrets.DOCKERHUB_USERNAME }}/ml-app-pi:latest
 
       - name: Invoke Server
-        run: docker run --name server-"$GITHUB_SHA" -v ${GITHUB_WORKSPACE}/models:/models -d --network host elham8116/inferenceserver ./invoke_server.sh
+        run: docker run --name server -v ${GITHUB_WORKSPACE}/models:/models -d --network host elham8116/inferenceserver ./invoke_server.sh
         
       - name: Run unit test inside docker container
         run: docker run --name test-"$GITHUB_SHA" "${{ secrets.DOCKERHUB_USERNAME }}/ml-app-pi:latest" -m unittest --verbose --failfast
