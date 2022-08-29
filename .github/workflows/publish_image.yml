@@ -62,7 +62,7 @@ jobs:
     
      - name: run the container on virtual raspberry pi 
        run:
-        docker run --name ml-app-pi -d --network host ${{ secrets.DOCKER_USERNAME }}/ml-app-pi:latest
+        docker run --name ml-app-pi -d --network host ${{ secrets.DOCKERHUB_USERNAME }}/ml-app-pi:latest
             
 
       
