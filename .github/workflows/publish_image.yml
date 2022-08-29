@@ -63,6 +63,10 @@ jobs:
      - name: run the container on virtual raspberry pi 
        run:
         docker run --name ml-app-pi -d --network host ${{ secrets.DOCKERHUB_USERNAME }}/ml-app-pi:latest
+        
+     - name: remove unused images
+       run: 
+         docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
             
 
       
