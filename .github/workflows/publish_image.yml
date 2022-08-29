@@ -18,7 +18,11 @@ jobs:
         uses: actions/checkout@v3
         
       - name: Stop and remove server container if exists
+        run: docker ps -q --filter "name= server-"$GITHUB_SHA"" | grep -q . && docker stop server-"$GITHUB_SHA" && docker rm -fv server-"$GITHUB_SHA"
+        
+      - name: Testing filter definitions
         run: docker ps -q --filter "name= server-"$GITHUB_SHA"" | grep -q . && echo Found || echo Not Found
+        
         
       - name: Build the docker image
         run: docker build . --file Dockerfile --tag ${{ secrets.DOCKERHUB_USERNAME }}/ml-app-pi:latest
