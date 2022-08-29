@@ -21,7 +21,7 @@ jobs:
         run: docker ps -q --filter "name= server" | grep -q . && echo Found || echo Not Found
         
       - name: Stop and remove server container if exists
-        run: if docker ps -q --filter "name= ml-app-"$GITHUB_SHA"" | grep -q .; then docker stop ml-app-"$GITHUB_SHA" && docker rm -fv ml-app-"$GITHUB_SHA"; fi
+        run: if docker ps -q --filter "name= server-"$GITHUB_SHA"" | grep -q .; then docker stop server-"$GITHUB_SHA" && docker rm -fv server-"$GITHUB_SHA"; fi
 
         
       - name: Build the docker image
