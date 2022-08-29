@@ -74,14 +74,15 @@ optimization { execution_accelerators {
 
 
 ### Set up and Configure Virtual Raspberry Pi 4 
-1. Login to your Arm Virtual Hardware account at https://app.avh.arm.com/ <br />
-2. Create virtual Raspberry Pi 4 Device and Choose Raspberry Pi OS lite (11.2.0) <br />
-3. Select **CONSOLE** from device menu and login to your virtual device using the default username: _pi_ and password: _raspberry_ <br />
-4. Connect to your virtual device via VPN <br />
+1. Login to your Arm Virtual Hardware account at https://app.avh.arm.com/ 
+2. Create virtual Raspberry Pi 4 Device and Choose Raspberry Pi OS lite (11.2.0) 
+3. Select **CONSOLE** from device menu and login to your virtual device using the default username: _pi_ and password: _raspberry_ 
+4. Connect to your virtual device via VPN 
    * download the .ovpn file from the Raspberry Pi 4's Connect tab 
    * connect to your virtual device using openvpn
    
       ```sudo openvpn --config ~/Downloads/AVH_config.ovpn```
+      
 If you are on Mac OS or Windows OS, follow the steps in this [article](https://intercom.help/arm-avh/en/articles/6131455-connecting-to-the-vpn) to connect to your virtual device
 
 ### GitHub Actions
@@ -92,9 +93,9 @@ If you are on Mac OS or Windows OS, follow the steps in this [article](https://i
 
    ```sudo apt-get install -y jq docker.io```
 2. Check if the service is running
-
    ```sudo systemctl status docker```
-In case identifying issues with the Device Kernel, follow the steps in [Updating Raspberry Pi page](https://intercom.help/arm-avh/en/articles/6278501-updating-the-raspberry-pi-4-kernel#h_f3c477ba86) to fix the updated kernel 
+   
+**Note**: In case identifying issues with the Device Kernel, follow the steps in [Updating Raspberry Pi page](https://intercom.help/arm-avh/en/articles/6278501-updating-the-raspberry-pi-4-kernel#h_f3c477ba86) to fix the updated kernel 
 
 3. Authenticate yourself with GitHub container registry following the steps in [GitHub page](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry#authenticating-to-the-container-registry)
    * select ```repo``` ```workflow``` ```write:packages``` ```delete:packages``` 
