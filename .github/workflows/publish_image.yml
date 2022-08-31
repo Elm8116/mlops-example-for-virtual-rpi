@@ -3,70 +3,62 @@
 # SPDX-License-Identifier: MIT
 #
 
+
 name: Build and Publish Docker Image on Docker Hub
 on:
   push:
     branches: [main]
     paths-ignore:
       - '**/README.md'
+env: 
+   DOCKERHUB_USERNAME: dockerhub-username
 jobs:
   build_image:
     runs-on: self-hosted
     steps:
-    
       - name: Checkout
         uses: actions/checkout@v3
         
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+            username: ${{ secrets.DOCKER_USERNAME }}
+            password: ${{ secrets.DOCKER_PASSWORD }}
+            
+      - name: env set
+        run: echo "DOCKERHUB_USERNAME=${{ secrets.DOCKER_USERNAME }}" >> $GITHUB_ENV
+      
       - name: Testing filter definitions
         run: docker ps -q --filter "name= server" | grep -q . && echo Found || echo Not Found
         
       - name: Stop and remove server container if exists
-        run: if docker ps -q --filter "name= server" | grep -q .; then docker stop server && docker rm -fv server; fi
+        run: if docker ps -q --filter "name= server" | grep -q .; then docker stop $(docker ps -q --filter "name= server") && docker rm $(docker ps -qa --filter "name= server"); fi
+      
       
       - name: Testing filter definitions
-        run: docker ps -q --filter "name= ml-app-pi" | grep -q . && echo Found || echo Not Found
+        run: docker ps -q --filter "name= api" | grep -q . && echo Found || echo Not Found
         
-      - name: Stop and remove application container if exists
-        run: if docker ps -q --filter "name= ml-app-pi" | grep -q .; then docker stop ml-app-pi && docker rm -fv ml-app-pi; fi
-        
-      - name: Build the docker image
-        run: docker build . --file Dockerfile --tag ${{ secrets.DOCKERHUB_USERNAME }}/ml-app-pi:latest
+      - name: Stop and remove api container if exists
+        run: if docker ps -q --filter "name= api" | grep -q .; then docker stop $(docker ps -q --filter "name= api") && docker rm $(docker ps -qa --filter "name= api"); fi
 
-      - name: Invoke Server
-        run: docker run --name server -v ${GITHUB_WORKSPACE}/models:/models -d --network host elham8116/inferenceserver ./invoke_server.sh
+        
+      - name: Build the images
+        run: docker-compose build 
+      
+      - name: Invoke server
+        run: docker-compose run -d server  
         
       - name: Run unit test inside docker container
-        run: docker run --name test-"$GITHUB_SHA" "${{ secrets.DOCKERHUB_USERNAME }}/ml-app-pi:latest" -m unittest --verbose --failfast
-      
-      - name: Remove test container
-        run: docker rm test-"$GITHUB_SHA"
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-            username: ${{ secrets.DOCKERHUB_USERNAME }}
-            password: ${{ secrets.DOCKERHUB_TOKEN }}
+        run: docker-compose run -d api -m unittest --verbose --failfast
         
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-            
+      - name: Run api
+        run: docker-compose run -d api 
+        
       - name: Push Image to Docker Hub
         run:
-         docker push ${{ secrets.DOCKERHUB_USERNAME }}/ml-app-pi:latest
-         
-         
-  deploy:
-    needs: [build_image]
-    runs-on: self-hosted
-    steps:
-    
-     - name: run the container on virtual raspberry pi 
-       run:
-        docker run --name ml-app-pi -d --network host ${{ secrets.DOCKERHUB_USERNAME }}/ml-app-pi:latest
-        
-     - name: remove unused images
-       run: 
-         docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
-            
+          docker push ${{ secrets.DOCKER_USERNAME }}/ml-app-pi:latest 
+          
+      - name: remove unused images
+        run: if docker images -q --filter "dangling=true" | grep -q .; then docker rmi $(docker images --filter "dangling=true" -q --no-trunc); fi 
 
       
