@@ -59,6 +59,6 @@ jobs:
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/ml-app-pi:latest 
           
       - name: remove unused images
-        run: if docker images -q --filter "dangling=true" | grep -q .; then docker rmi $(docker images --filter "dangling=true" -q --no-trunc); fi 
+        run: if docker images -q --filter "dangling=true" | grep -q .; then docker rmi -f $(docker images --filter "dangling=true" -q --no-trunc); fi 
 
       
