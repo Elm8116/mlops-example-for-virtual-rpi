@@ -45,13 +45,13 @@ jobs:
       - name: Build the images
         run: docker-compose build 
       
-      - name: Invoke server
+      - name: Invoke server 
         run: docker-compose run -d server  
         
       - name: Run unit test inside docker container
         run: docker-compose run -d api -m unittest --verbose --failfast
         
-      - name: Run api
+      - name: Run api container in the background
         run: docker-compose run -d api 
         
       - name: Push Image to Docker Hub
