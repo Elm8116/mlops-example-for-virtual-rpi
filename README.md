@@ -114,8 +114,8 @@ If you are on Mac OS or Windows OS, follow the steps in this [article](https://i
 ```pip install docker-compose```
 
 7. Generate an AVH API Token following the steps in [Generating an API Token](https://intercom.help/arm-avh/en/articles/6137393-generating-an-avh-api-token) article and save it. 
-8. Select Raspberry Pi 4 CONSOLE tab and clone the repository 
-9. Set up Secrets in GitHub Action workflows to accept jobs 
+
+8. Set up Secrets in GitHub Action workflows to accept jobs 
    * navigate to the main page of your repository.
    * click on the "Setting" tab on the top of the page.
    * in the left sidebar, click Secrets and select Actions.
