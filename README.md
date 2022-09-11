@@ -5,7 +5,7 @@ including peripherals, sensors, and other components of Raspberry Pi development
 It utilizes cloud-based servers and enable modern agile software development practices,
 such as continuous integration and continuous deployment CI/CD (DevOps) and MLOps workflows to software developers. 
 
-The objective of this project is to automate the image classification web-application deployment process on virtual raspberry pi 4 using GitHub Actions.
+The objective of this project is to automate the image classification web-application deployment process on virtual Raspberry Pi 4 using GitHub Actions.
 
 The workflow contains the following stages:
 1. Build a docker image for the application using Dockerfile
@@ -13,7 +13,7 @@ The workflow contains the following stages:
    * The models are served with [Triton Inference Server with Arm NN backend](https://gitlab.com/arm-research/smarter/armnn_tflite_backend) to accelerate inference
 3. Run Unittest to test Flask server by checking if it is retuning 200 status code
 4. Login to Docker Hub and Push image 
-5. Deploy the application on virtual raspberry pi
+5. Deploy the application on virtual Raspberry Pi
 
 
 ### Prerequisites 
