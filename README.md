@@ -86,7 +86,7 @@ password: _raspberry_
       
 If you are on Mac OS or Windows OS, follow the steps in this [article](https://intercom.help/arm-avh/en/articles/6131455-connecting-to-the-vpn) to connect to your virtual device
 
-### Set up Docker Hub and AVH API Tokens 
+### Set up Docker Hub 
 1. Install Docker on Virtual Raspberry Pi 4
 
    ```sudo apt-get update```
@@ -113,14 +113,11 @@ If you are on Mac OS or Windows OS, follow the steps in this [article](https://i
 6. Install Docker compose on Virtual Raspberry Pi 4 
 ```pip install docker-compose```
 
-7. Generate an AVH API Token following the steps in [Generating an API Token](https://intercom.help/arm-avh/en/articles/6137393-generating-an-avh-api-token) article and save it. 
-
-8. Set up Secrets in GitHub Action workflows to accept jobs 
+7. Set up Secrets in GitHub Action workflows to accept jobs 
    * navigate to the main page of your repository.
    * click on the "Setting" tab on the top of the page.
    * in the left sidebar, click Secrets and select Actions.
    * on the right bar, click on "New repository secret".
-   * add ```API_TOKEN``` secret to your repository with a value of your API Token.
    * add ```DOCKERHUB_USERNAME``` and ```DOCKERHUB_TOKEN``` secrets to your repository with a value of your username and a token generated in the step 4.
    
 ### Add Self-hosted Runner 
