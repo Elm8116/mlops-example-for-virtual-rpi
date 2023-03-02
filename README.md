@@ -16,9 +16,9 @@ The workflow contains the following stages:
 5. Deploy the application on virtual Raspberry Pi
 
 
-### Prerequisites 
+### Triton Inference Server 
+#### Model Repository Layout
 
-#### Triton Inference Server Model Repository Layout
 To load the model in triton inference server with Arm NN backend, a model repository with the following structure should be created. These repository paths are specified when triton is started using ```--model-reposiotry``` option. Find more details about the model repository and directory structure in Triton inference server from [documentation](https://github.com/triton-inference-server/server/blob/r20.12/docs/model_repository.md). The below is an example model repository layout for MobileNet:   
 ``` models
 ├── tflite_model
@@ -27,24 +27,8 @@ To load the model in triton inference server with Arm NN backend, a model reposi
 │   └── config.pbtxt
 |   └── labels.txt
 ```
-#### Download MobileNet model in its subdirectory 
 
-```
-# Get the model 
-$ mkdir mobilenet 
-$ curl http://download.tensorflow.org/models/mobilenet_v1_2018_08_02/mobilenet_v1_1.0_224.tgz | tar xvz -C ./mobilenet
-
-# Get labels corresponding to each image 
-$ curl https://storage.googleapis.com/download.tensorflow.org/models/mobilenet_v1_1.0_224_frozen.tgz | tar xzv –C ./mobilenet 
-
-$ mkdir -p models/tflite_model/1 
-
-$ mv mobilenet/mobilenet_v1_1.0_224.tflite models/tflite_model/1
-
-$ cp mobilenet/mobilenet_v1_1.0_224/labels.txt models/tflite_model
-```
-
-#### Triton Inference Server Model Configuration and Runtime Optimization with Am NN Delegate 
+#### Model Configuration and Runtime Optimization with Am NN Delegate 
 Each model in the model repository must include a model config that provides required and optional information about the model such as Name, Platform and Backend. To accelerate inference on Raspberry Pi with Cortex-A72 processor use cpu acceleration with ```armnn``` parameter in the optimization model configuration as follow:
 
 ``` configuration = """
@@ -72,6 +56,28 @@ optimization { execution_accelerators {
 """ 
 ```
 
+**Note**: Triton with TFLite Arm NN backend docker image is a proof of concept and not recommended for production.
+
+### Prerequisites 
+#### Download MobileNet model in its subdirectory 
+
+```
+# Get the model 
+$ mkdir mobilenet 
+$ curl http://download.tensorflow.org/models/mobilenet_v1_2018_08_02/mobilenet_v1_1.0_224.tgz | tar xvz -C ./mobilenet
+
+# Get labels corresponding to each image 
+$ curl https://storage.googleapis.com/download.tensorflow.org/models/mobilenet_v1_1.0_224_frozen.tgz | tar xzv –C ./mobilenet 
+
+$ mkdir -p models/tflite_model/1 
+
+$ mv mobilenet/mobilenet_v1_1.0_224.tflite models/tflite_model/1
+
+$ cp mobilenet/mobilenet_v1_1.0_224/labels.txt models/tflite_model
+```
+
+
+
 
 ### Set up and Configure Virtual Raspberry Pi 4 
 1. Login to your Arm Virtual Hardware account at https://app.avh.arm.com/ 
@@ -84,7 +90,7 @@ password: _raspberry_
    
       ```sudo openvpn --config ~/Downloads/AVH_config.ovpn```
       
-If you are on Mac OS or Windows OS, follow the steps in this [article](https://intercom.help/arm-avh/en/articles/6131455-connecting-to-the-vpn) to connect to your virtual device
+If you are on macOS or Windows OS, follow the steps in this [article](https://intercom.help/arm-avh/en/articles/6131455-connecting-to-the-vpn) to connect to your virtual device
 
 ### Set up Docker Hub 
 1. Install Docker on Virtual Raspberry Pi 4
@@ -92,28 +98,41 @@ If you are on Mac OS or Windows OS, follow the steps in this [article](https://i
    ```sudo apt-get update```
 
    ```sudo apt-get install -y jq docker.io```
+
+   ```sudo usermod -aG docker [user_name] # Add a Non-Root User to the Docker Group```
+ 
+   ```sudo usermod -aG docker ${USER} # Add the permissions to the current user```
+
 2. Check if the service is running
+
    ```sudo systemctl status docker```
+3. Install Docker-Compose 
+
+   ```sudo apt-get install libffi-dev libssl-dev```
+
+   ```sudo apt install python3-dev```
+
+   ```sudo apt-get install -y python3 python3-pip```
    
 **Note**: In case identifying issues with the Device Kernel, follow the steps in [Updating Raspberry Pi page](https://intercom.help/arm-avh/en/articles/6278501-updating-the-raspberry-pi-4-kernel#h_f3c477ba86) to fix the updated kernel 
 
-3. Authenticate yourself with GitHub container registry following the steps in [GitHub page](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry#authenticating-to-the-container-registry)
+4. Authenticate yourself with GitHub container registry following the steps in [GitHub page](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-container-registry#authenticating-to-the-container-registry)
    * select ```repo``` ```workflow``` ```write:packages``` ```delete:packages``` 
    * login to ghcr.io from your Raspberry Pi Console 
    ```sudo cat ~/githubtoken.txt | docker login https://ghcr.io -u <username> --password-stdin```
-4. Authenticate yourself with Docker Hub and use your Docker Hub username ```DOCKERHUB_USERNAME``` and token ```DOCKERHUB_TOKEN``` as secrets in your GitHub repo. To do so, follow these steps:
+5. Authenticate yourself with Docker Hub and use your Docker Hub username ```DOCKERHUB_USERNAME``` and token ```DOCKERHUB_TOKEN``` as secrets in your GitHub repo. To do so, follow these steps:
    * sign in to Docker Hub
    * select account settings on the top right of the page
    * select security tab from the left sidebar 
    * generate NEW Access Token and save it 
-5. From Docker Hub dashboard, click Create Repository and type name ```ml-app-pi``` in the Name section 
+6. From Docker Hub dashboard, click Create Repository and type name ```ml-app-pi``` in the Name section 
    
 **Note**: You need to [Sign Up](https://hub.docker.com/signup) to Docker Hub if you do not have an account.
 
-6. Install Docker compose on Virtual Raspberry Pi 4 
+7. Install Docker compose on Virtual Raspberry Pi 4 
 ```pip install docker-compose```
 
-7. Set up Secrets in GitHub Action workflows to accept jobs 
+8. Set up Secrets in GitHub Action workflows to accept jobs 
    * navigate to the main page of your repository.
    * click on the "Setting" tab on the top of the page.
    * in the left sidebar, click Secrets and select Actions.
